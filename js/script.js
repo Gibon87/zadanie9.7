@@ -6,9 +6,9 @@ var pickRock = document.getElementById('js-playerPick_rock'),
      pickPaper = document.getElementById('js-playerPick_paper'),
      pickScissors = document.getElementById('js-playerPick_scissors');
 
-pickRock.addEventListener('click', function() { playerPick('rock') });
-pickPaper.addEventListener('click', function() { playerPick('paper') });
-pickScissors.addEventListener('click', function() { playerPick('scissors') });
+pickRock.addEventListener('click', function() { playerPick('rock'); });
+pickPaper.addEventListener('click', function() { playerPick('paper'); });
+pickScissors.addEventListener('click', function() { playerPick('scissors'); });
 
 var gameState = 'notStarted',  //started // ended
     player = {
@@ -31,7 +31,9 @@ var newGameElem = document.getElementById('js-newGameElement'),
       break;
     case 'ended':
         newGameBtn.innerText = 'Jeszcze raz';
+      break;
     case 'notStarted':
+      break;
     default:
         newGameElem.style.display = 'block';
         pickElem.style.display = 'none';
@@ -50,7 +52,7 @@ function newGame() {
     setGameElements();
   }
     playerNameElem.innerHTML = player.name;
-    // setGamePoints(); // This function has not been created yet
+    setGamePoints(); 
   }
 function playerPick(playerPick) {
     console.log(playerPick);
@@ -72,9 +74,7 @@ function playerPick(playerPick) {
 }
 function checkRoundWinner(playerPick, computerPick) {
   playerResultElem.innerHTML = computerResultElem.innerHTML = '';
-
   var winnerIs = 'player';
-
     if (playerPick == computerPick) {
         winnerIs = 'noone'; // remis
     } else if (
@@ -84,7 +84,6 @@ function checkRoundWinner(playerPick, computerPick) {
         
         winnerIs = 'computer';
     }
-
     if (winnerIs == 'player') {
         playerResultElem.innerHTML = "Win!";
         player.score++;
@@ -92,7 +91,6 @@ function checkRoundWinner(playerPick, computerPick) {
         computerResultElem.innerHTML = "Win!";
         computer.score++;
     }
-
 }
 function playerPick(playerPick) {
     var computerPick = getComputerPick();
@@ -104,9 +102,7 @@ function playerPick(playerPick) {
 }
 function checkRoundWinner(playerPick, computerPick) {
     playerResultElem.innerHTML = computerResultElem.innerHTML = '';
-
     var winnerIs = 'player';
-
     if (playerPick == computerPick) {
         winnerIs = 'noone'; // remis
         playerResultElem.innerHTML = "Tie!";
@@ -115,10 +111,8 @@ function checkRoundWinner(playerPick, computerPick) {
         (computerPick == 'rock' &&  playerPick == 'scissors') ||
         (computerPick == 'scissors' &&  playerPick == 'paper') ||
         (computerPick == 'paper' &&  playerPick == 'rock')) {
-
         winnerIs = 'computer';
     }
-
     if (winnerIs == 'player') {
         playerResultElem.innerHTML = "Win!";
         player.score++;
@@ -126,27 +120,20 @@ function checkRoundWinner(playerPick, computerPick) {
         computerResultElem.innerHTML = "Win!";
         computer.score++;
     }
-
     setGamePoints();
     gameFinished();
 }
-
 function setGamePoints() {
     playerPointsElem.innerHTML = player.score;
     computerPointsElem.innerHTML = computer.score;
 }
-
 function gameFinished() {
-    if (player.score == 10) {
-        swal("Hooray!", player.name + " wins!", "success")
-        gameState = 'ended'
-    } else if (computer.score == 10) {
-        sweetAlert({
-        title: "Oh no!", 
-        text: "Computer is the winner", 
-        type: "error"
-    });
-        gameState = 'ended'
+    if (player.score == 4) {
+        alert("Brawo!", player.name + " wins!", "success");
+        gameState = 'ended';
+    } else if (computer.score == 4) {
+        alert("computer wins");
+        gameState = 'ended';
     }
     setGameElements();
 }
