@@ -43,12 +43,12 @@ var playerPointsElem = document.getElementById('js-playerPoints'),
     computerPointsElem = document.getElementById('js-computerPoints');
 
 function newGame() {
-  player.name = prompt('Please enter your name', 'imię gracza');
+  player.name = prompt('Please enter your name', 'imie gracza');
   if (player.name) {
     player.score = computer.score = 0;
     gameState = 'started';
     setGameElements();
-
+  }
     playerNameElem.innerHTML = player.name;
     // setGamePoints(); // This function has not been created yet
   }
@@ -101,4 +101,52 @@ function playerPick(playerPick) {
     computerPickElem.innerHTML = computerPick;
     
     checkRoundWinner(playerPick, computerPick);
+}
+function checkRoundWinner(playerPick, computerPick) {
+    playerResultElem.innerHTML = computerResultElem.innerHTML = '';
+
+    var winnerIs = 'player';
+
+    if (playerPick == computerPick) {
+        winnerIs = 'noone'; // remis
+        playerResultElem.innerHTML = "Tie!";
+        computerResultElem.innerHTML = "Tie!";
+    } else if (
+        (computerPick == 'rock' &&  playerPick == 'scissors') ||
+        (computerPick == 'scissors' &&  playerPick == 'paper') ||
+        (computerPick == 'paper' &&  playerPick == 'rock')) {
+
+        winnerIs = 'computer';
+    }
+
+    if (winnerIs == 'player') {
+        playerResultElem.innerHTML = "Win!";
+        player.score++;
+    } else if (winnerIs == 'computer') {
+        computerResultElem.innerHTML = "Win!";
+        computer.score++;
+    }
+
+    setGamePoints();
+    gameFinished();
+}
+
+function setGamePoints() {
+    playerPointsElem.innerHTML = player.score;
+    computerPointsElem.innerHTML = computer.score;
+}
+
+function gameFinished() {
+    if (player.score == 10) {
+        swal("Hooray!", player.name + " wins!", "success")
+        gameState = 'ended'
+    } else if (computer.score == 10) {
+        sweetAlert({
+        title: "Oh no!", 
+        text: "Computer is the winner", 
+        type: "error"
+    });
+        gameState = 'ended'
+    }
+    setGameElements();
 }
