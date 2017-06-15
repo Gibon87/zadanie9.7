@@ -31,15 +31,16 @@ var newGameElem = document.getElementById('js-newGameElement'),
       break;
     case 'ended':
         newGameBtn.innerText = 'Jeszcze raz';
-      break;
     case 'notStarted':
-      break;
     default:
         newGameElem.style.display = 'block';
         pickElem.style.display = 'none';
         resultsElem.style.display = 'none';
   }
 }
+
+setGameElements();
+
 var playerPointsElem = document.getElementById('js-playerPoints'),
     playerNameElem = document.getElementById('js-playerName'),
     computerPointsElem = document.getElementById('js-computerPoints');
